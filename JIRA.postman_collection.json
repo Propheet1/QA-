@@ -1,0 +1,330 @@
+{
+	"info": {
+		"_postman_id": "6b79cf80-fa85-4fda-8e5e-fc7e4260d595",
+		"name": "JIRA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createmeta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.collectionVariables.set(\"project_key\", jsonData.projects[1].key);\r",
+							"pm.collectionVariables.set(\"issuetype_id\", jsonData.projects[1].issuetypes[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://89.223.126.182:8080/rest/api/2/issue/createmeta",
+					"protocol": "http",
+					"host": [
+						"89",
+						"223",
+						"126",
+						"182"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"createmeta"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.collectionVariables.set(\"URL_issue\", jsonData.self);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"project\": {\r\n            \"key\": \"{{project_key}}\"\r\n        },\r\n        \"summary\": \"REST created issue Baranovsky \",\r\n        \"description\": \"Creating project keys and issue type names using the REST API\",\r\n        \"issuetype\": {\r\n            \"id\": \"{{issuetype_id}}\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://89.223.126.182:8080/rest/api/2/issue",
+					"protocol": "http",
+					"host": [
+						"89",
+						"223",
+						"126",
+						"182"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "issueD",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.collectionVariables.set(\"URL_issue\", jsonData.self);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"project\": {\r\n            \"key\": \"{{project_key}}\"\r\n        },\r\n        \"summary\": \"REST created issue Baranovsky \",\r\n        \"description\": \"Creating project keys and issue type names using the REST API\",\r\n        \"issuetype\": {\r\n            \"id\": \"{{issuetype_id}}\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://89.223.126.182:8080/rest/api/2/issue",
+					"protocol": "http",
+					"host": [
+						"89",
+						"223",
+						"126",
+						"182"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Description & Summary test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.fields.description).to.eql(\"Creating project keys and issue type names using the REST API\");\r",
+							"    pm.expect(jsonData.fields.summary).to.eql(\"REST created issue Baranovsky \");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_issue}}",
+					"host": [
+						"{{URL_issue}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "transitions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.collectionVariables.set(\"transition\", jsonData.transitions[2].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_issue}}/transitions",
+					"host": [
+						"{{URL_issue}}"
+					],
+					"path": [
+						"transitions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "transitions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.collectionVariables.set(\"transition\", jsonData.transitions[2].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"transition\": {\r\n        \"id\": \"{{transition}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_issue}}/transitions",
+					"host": [
+						"{{URL_issue}}"
+					],
+					"path": [
+						"transitions"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "123456",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "xirurgi1995@yandex.ru",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "project_key",
+			"value": ""
+		},
+		{
+			"key": "issuetype_id",
+			"value": ""
+		},
+		{
+			"key": "URL_issue",
+			"value": ""
+		},
+		{
+			"key": "transition",
+			"value": ""
+		}
+	]
+}
