@@ -1,0 +1,41 @@
+#/!bin/bash
+
+options=(                Есть некое количество опций со значениями 1,2,3,4,5
+	'1'
+	"2"
+	'3'
+	'4'
+	'5'
+)
+echo 'Please choose an option'           Выводиться сообщение с предложение выбрать опцию 
+select input in "${options[@]}"; do      Предлогает выбрать из доступных отпций 
+	case "$input" in
+		"${options[0]}")
+			ls                Показывает все доступные опции
+			;;
+		"${options[1]}")
+			date $'+Time: %T\nDate: %D'          Выводятся время и дата 
+			;;
+		"${options[2]}")
+			read -p 'What file do you wish to check? ' finput     Сообщение с вопросом какой файл вы хотите проверить   
+			if [[ -d $finput ]]; then
+				format='%s is a directory.\n'      Введеное значение имя дериктории
+			elif [[ -f $finput ]]; then
+				format='%s is a file.\n'            Введеное значение имя файла 
+			else
+				format='%s does not exist.\n'       Указанное имя не существует 
+			fi
+			printf "$format" "$finput"
+			;;
+		"${options[3]}")
+			read -p 'Please enter filename: ' binput   Выводиться сообщение что нужно указать имя файла 
+			cp "$binput"{,.bak}                            создание его резарвной копии
+			;;
+		"${options[4]}")                                       Выход из скрипта
+			break
+			;;
+		*)
+			echo 'Not a valid option.'         Ввод других значений, скрипт скажет что, такого значения не существует 
+			;;                                      
+	esac
+done                                        Вроде должен работать, не совсем понятно почему нумерация опций так сделана 
